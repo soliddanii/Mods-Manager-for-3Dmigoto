@@ -10,7 +10,6 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish"
   },
-  "productName": "ZZZModManager",
   "author": "XLXZ",
   "license": "MIT",
   "devDependencies": {
