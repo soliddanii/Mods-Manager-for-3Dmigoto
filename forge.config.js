@@ -56,7 +56,7 @@ module.exports = {
           owner: 'soliddanii',
           name: 'mods-manager-for-3dmigoto'
         },
-        prerelease: true,
+        draft: true,
       }
     }
   ]
