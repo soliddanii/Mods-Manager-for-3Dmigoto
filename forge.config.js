@@ -16,15 +16,19 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-zip',
-      platforms: ['darwin'],
+      platforms: ['darwin', 'linux'],
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        bin: 'ZZZModManager',
+      }
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {},
+      config: {
+        bin: 'ZZZModManager',
+      }
     },
   ],
   plugins: [
@@ -49,7 +53,7 @@ module.exports = {
       name: '@electron-forge/publisher-github',
       config: {
         repository: {
-          owner: 'xiaolinxiaozhu',
+          owner: 'soliddanii',
           name: 'mods-manager-for-3dmigoto'
         },
         prerelease: true,
