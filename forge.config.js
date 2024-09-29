@@ -52,8 +52,7 @@ module.exports = {
           owner: 'xiaolinxiaozhu',
           name: 'mods-manager-for-3dmigoto'
         },
-        prerelease: false,
-        draft: true
+        prerelease: true,
       }
     }
   ]
