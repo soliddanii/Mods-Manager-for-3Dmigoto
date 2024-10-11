@@ -3,14 +3,12 @@ const fs = require('fs');
 const { url } = require('inspector');
 const path = require('path');
 const shell = require('electron').shell;
-const HMC = require("hmc-win32");
+const { refresh : refreshInZzz} = require('./refresh-in-zzz');
 const os = require('os');
 
 const isMac = os.platform() === "darwin";
 const isWindows = os.platform() === "win32";
 const isLinux = os.platform() === "linux";
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // 实际上 ___dirname 是当前文件所在的目录,但是 最终的目标是要找到 modResourceBackpack 的根文件夹，所以要找到这个文件夹的路径
 // 通过 在第一次打开时询问 rootdir 来 确认文件保存的位置
@@ -301,53 +299,8 @@ ipcMain.handle("refresh-in-zzz", async (event) => {
   // Only availabe in windows
   if(isWindows) {
 
-    // Virtual key code for F10. This key is the default but
-    // can be changed in d3dx.ini. Future improvement.
-    const VK_F10 = 0x79; 
-
-    // Process name. Should be set as a config value for 
-    // this to work while managing other games.
-    const processName = "ZenlessZoneZero.exe";
-  
-    // Get the process from the name
-    const process = HMC.getProcessNameList(processName);
-  
-    if(process.length > 0) {
-      // Get the Zenless Zone Zero Hwnd handle
-      const window = HMC.getProcessWindow(process[0].pid);
-  
-      // Get the Mod manager Hwnd handle
-      const manager = HMC.getForegroundWindow();
-  
-      if(window && manager) {
-        // ZZZ wont accept any keys if the manager is not run as admin.
-        // ZZZ wont accept virtual keys, only accepts direct input keys.
-        // Here is the trick to get ZZZ to register the VK input without admin:
-        
-        // 1. Press the F10 Key down on the manager
-        HMC.sendKeyboard(VK_F10, true);
-  
-        // 2. Set focus on ZZZ window
-        window.setFocus(true);
-        
-        // 3. Wait a reasonable amount of time for the key to register
-        await sleep(75);
-  
-        // 4. Set focus on the Manager window
-        manager.setFocus(true);
-  
-        // 5. Wait again for the window
-        await sleep(50);
-  
-        // 6. Release the F10 Key
-        HMC.sendKeyboard(VK_F10, false);
-  
-        // 7. Set focus on ZZZ window again
-        window.setFocus(true);
-  
-        refreshInZzzSuccess = true;
-      }
-    }
+    // Call the refresh function
+    refreshInZzzSuccess = await refreshInZzz();
   }
   
   return refreshInZzzSuccess;

@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1",
-    "hmc-win32": "^1.4.92",
+    "koffi": "^2.9.1",
     "sober": "^0.2.21"
   }
 }
